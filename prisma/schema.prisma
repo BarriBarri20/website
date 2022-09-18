@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model User that store the admin cridentatials
+model User {
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
+  role      Role   @default(DEVOLEPER)
+  email     String
+  avatar    String
+}
+model Post {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  slug      String   @unique
+  likes     Int      @default(0)
+  views     Int      @default(0)
+}
+
+model Session {
+  id        String   @id
+  createdAt DateTime @default(now())
+  likes     Int      @default(0)
+}
+// Type of roles can a user gets :
+enum Role {
+  USER
+  DEVOLEPER
+  ADMIN
+}
